@@ -11,16 +11,19 @@ class V1::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @time_reports = @user.time_reports.order(created_at: :desc)
+    @user = User.join_exp.find(params[:id])
+    @time_reports = @user.time_reports.join_exp.newest
     if @user
-      render json: { user: @user, time_reports: @time_reports }
+      render json: {
+        user: @user,
+        time_reports: @time_reports
+      }
     end
   end
 
   def create
     user = User.new(user_params)
-    if user.save
+    if user.save && user.create_experience!
       render json: user, status: :created
     else
       render json: user.errors, status: :unprocessable_entity
