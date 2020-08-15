@@ -50,3 +50,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # jsonレスポンスのため
 gem 'active_model_serializers'
+
+gem 'date_validator'
